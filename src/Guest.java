@@ -84,7 +84,7 @@ public class Guest{
         for (Guest g:assignedGuests) {
             result += g.ID+" "+this.countScore(g)+",";
         }
-        result = result.substring(0,result.length()-1)+"}";
+        result = result.substring(0,result.length()-1)+"}\n";
         return result;
     }
 }

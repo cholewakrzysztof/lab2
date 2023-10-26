@@ -4,12 +4,11 @@ public class Guest{
     Map<Attribute,Float> ownAttribute;
     Map<Attribute,Float> searchAttribute;
     Integer assignmentNumber;
-
     List<Guest> assignedGuests;
     List<Integer> assignedGuestsIDs;
     private Float B = 0.0f;
     private static Integer static_ID = 0;
-    public Integer ID;
+    private Integer ID;
     public Guest(Map<Attribute,Float> ownAttribute, Map<Attribute,Float> searchAttribute){
         this.ownAttribute = ownAttribute;
         this.searchAttribute = searchAttribute;
@@ -61,7 +60,7 @@ public class Guest{
             for(int j=0; j< assignedGuests.size()-1; j++){
                 Float g1Score = this.countScore(assignedGuests.get(j));
                 Float g2Score = this.countScore(assignedGuests.get(j+1));
-                if(g1Score<g2Score){
+                if(g1Score>g2Score){
                     Guest tmp = new Guest(assignedGuests.get(j+1));
                     assignedGuests.set(j+1,new Guest(assignedGuests.get(j)));
                     assignedGuests.set(j,tmp);
@@ -74,17 +73,34 @@ public class Guest{
         }
         if(assignedGuests.size()>5){
             assignedGuests.get(5).assignmentNumber--;
-            assignedGuests = assignedGuests.subList(0,5);
-            assignedGuestsIDs = assignedGuestsIDs.subList(0,5);
+            assignedGuests = assignedGuests.subList(1,6);
+            assignedGuestsIDs = assignedGuestsIDs.subList(1,6);
         }
     }
 
-    public String printAssignedGuests(){
-        String result = "For guest number: "+this.ID+" = {";
+    public String printAssignedGuests(Boolean withScore){
+        String result = "\nFor guest number: "+this.ID+" = {";
         for (Guest g:assignedGuests) {
-            result += g.ID+" "+this.countScore(g)+",";
+            result += g.ID;
+            if(withScore)
+                result+= " "+this.countScore(g);
+            result+= ",";
         }
         result = result.substring(0,result.length()-1)+"}\n";
         return result;
     }
+
+    public String printGuestStats(){
+        String result = "Guest number: "+this.ID+"\n   1. Is: ";
+        for(Attribute key: ownAttribute.keySet()){
+            result += key.toString()+" "+ownAttribute.get(key)+",";
+        }
+        result += "\n   2. Search for: ";
+        for(Attribute key: searchAttribute.keySet()){
+            result += key.toString()+" "+searchAttribute.get(key)+",";
+        }
+        return result;
+    }
+
+    public Integer getID(){ return this.ID; }
 }

@@ -7,23 +7,31 @@ public class IOManager {
     private Integer maxOwnAttributes;
     private Integer maxSearchAttributes;
     private Integer numberOfGuests;
-    private Random random = new Random();
+    private final Random random = new Random();
 
     public IOManager(String[] input) throws Exception {
         if(input.length%2!=0){
-            WrongParametersException e = new WrongParametersException("Number of parameters is incorrect");
-            throw e;
+            throw new WrongParametersException("Number of parameters is incorrect");
         }
-        List args = new LinkedList<String>(Arrays.stream(input).toList());
-        this.maxOwnAttributes = Integer.parseInt(args.get(args.indexOf("-o")+1).toString());
-        if(this.maxOwnAttributes<=0)
-            throw new WrongParametersException("Number of max own attributes must be higher than 0");
-        this.maxSearchAttributes = Integer.parseInt(args.get(args.indexOf("-s")+1).toString());
-        if(this.maxSearchAttributes<=0)
-            throw new WrongParametersException("Number of max search attributes must be higher than 0");
-        this.numberOfGuests = Integer.parseInt(args.get(args.indexOf("-g")+1).toString());
-        if(this.numberOfGuests<=0)
-            throw new WrongParametersException("Number of guest must be higher than 0");
+        List<String> args = new LinkedList<>(Arrays.stream(input).toList());
+
+        if(args.contains("-o")){
+            this.maxOwnAttributes = Integer.parseInt(args.get(args.indexOf("-o")+1));
+            if(this.maxOwnAttributes<=0)
+                throw new WrongParametersException("Number of max own attributes must be higher than 0");
+        }else this.maxOwnAttributes = 2;
+
+        if(args.contains("-s")){
+            this.maxSearchAttributes = Integer.parseInt(args.get(args.indexOf("-s")+1));
+            if(this.maxSearchAttributes<=0)
+                throw new WrongParametersException("Number of max search attributes must be higher than 0");
+        }else this.maxSearchAttributes = 4;
+
+        if(args.contains("-g")) {
+            this.numberOfGuests = Integer.parseInt(args.get(args.indexOf("-g") + 1));
+            if (this.numberOfGuests <= 0)
+                throw new WrongParametersException("Number of guest must be higher than 0");
+        }else this.numberOfGuests = 20;
     }
     public static String[] getGuestStringArray(List<Guest> guests){
         String[] result = new String[guests.size()];
@@ -40,5 +48,16 @@ public class IOManager {
     }
     public Integer getRandomSEARCHAttributes(){
         return random.nextInt(1,maxSearchAttributes);
+    }
+
+    public void setMaxOwnAttributes(Integer value){
+        maxOwnAttributes = value;
+    }
+    public void setMaxSearchAttributes(Integer value){
+        maxSearchAttributes = value;
+    }
+
+    public void setNumberOfGuests(Integer value){
+        numberOfGuests = value;
     }
 }

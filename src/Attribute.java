@@ -12,15 +12,15 @@ public enum Attribute {
     }
 
     public static Attribute fromString(String source){
-        switch (source){
-            case "DEVELOPER": return DEVELOPER;
-            case "INVESTOR": return INVESTOR;
-            case "SALES": return SALES;
-            case "MARKETING": return MARKETING;
-            case "PROJECT_MANAGER": return PROJECT_MANAGER;
-            case "ARCHITECT": return ARCHITECT;
-            case "INTERN" : return INTERN;
-            default : return UNDECIDED;
-        }
+        return switch (source) {
+            case "DEVELOPER" -> DEVELOPER;
+            case "INVESTOR" -> INVESTOR;
+            case "SALES" -> SALES;
+            case "MARKETING" -> MARKETING;
+            case "PROJECT_MANAGER" -> PROJECT_MANAGER;
+            case "ARCHITECT" -> ARCHITECT;
+            case "INTERN" -> INTERN;
+            default -> UNDECIDED;
+        };
     }
 }

@@ -10,7 +10,7 @@ public class Main {
             guests.add(GuestFactory.createGuest(ioManager.getRandomOWNAttributes(), ioManager.getRandomSEARCHAttributes()));
         }
 
-        guests = Matcher.matchGuests(guests);
+        Matcher.matchGuests(guests);
 
         for (String text:IOManager.getGuestStringArray(guests)) {
             System.out.print(text);

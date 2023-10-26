@@ -2,7 +2,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class Matcher {
-    public static List<Guest> matchGuests(List<Guest> guests){
+    public static void matchGuests(List<Guest> guests){
         for (Guest guest : guests) {
             for (Guest possibleMatch : guests) {
                 if (Objects.equals(guest.getID(), possibleMatch.getID()))
@@ -15,6 +15,5 @@ public class Matcher {
                 guest.sortAssignedGuests();
             }
         }
-        return guests;
     }
 }

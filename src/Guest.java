@@ -6,9 +6,9 @@ public class Guest{
     Integer assignmentNumber;
     List<Guest> assignedGuests;
     List<Integer> assignedGuestsIDs;
-    private Float B = 0.0f;
+    private static final float B = 0.0f;
     private static Integer static_ID = 0;
-    private Integer ID;
+    private final Integer ID;
     public Guest(Map<Attribute,Float> ownAttribute, Map<Attribute,Float> searchAttribute){
         this.ownAttribute = ownAttribute;
         this.searchAttribute = searchAttribute;
@@ -27,26 +27,26 @@ public class Guest{
         this.ID = g.ID;
     }
     public String toString(){
-        String result = "";
+        StringBuilder result = new StringBuilder();
         for (Attribute atr: ownAttribute.keySet()) {
-            result+=atr.toString()+":"+ ownAttribute.get(atr).toString()+",";
+            result.append(atr.toString()).append(":").append(ownAttribute.get(atr).toString()).append(",");
         }
-        result+= "/";
+        result.append("/");
         for (Attribute atr: searchAttribute.keySet()) {
-            result+=atr.toString()+":"+ searchAttribute.get(atr).toString()+",";
+            result.append(atr.toString()).append(":").append(searchAttribute.get(atr).toString()).append(",");
         }
-        return result;
+        return result.toString();
     }
 
     public Float countScore(Guest otherGuest){
-        Float score = 0f;
+        float score = 0f;
         for (Attribute atr: this.ownAttribute.keySet()) {
-            if (otherGuest.searchAttribute.keySet().contains(atr)){
+            if (otherGuest.searchAttribute.containsKey(atr)){
                 score+= ownAttribute.get(atr)*otherGuest.searchAttribute.get(atr);
             }
         }
         for (Attribute atr: this.searchAttribute.keySet()){
-            if(otherGuest.ownAttribute.keySet().contains(atr)){
+            if(otherGuest.ownAttribute.containsKey(atr)){
                 score+= searchAttribute.get(atr)*otherGuest.ownAttribute.get(atr);
             }
         }
@@ -79,27 +79,27 @@ public class Guest{
     }
 
     public String printAssignedGuests(Boolean withScore){
-        String result = "\nFor guest number: "+this.ID+" = {";
+        StringBuilder result = new StringBuilder("\nFor guest number: " + this.ID + " = {");
         for (Guest g:assignedGuests) {
-            result += g.ID;
+            result.append(g.ID);
             if(withScore)
-                result+= " "+this.countScore(g);
-            result+= ",";
+                result.append(" ").append(this.countScore(g));
+            result.append(",");
         }
-        result = result.substring(0,result.length()-1)+"}\n";
-        return result;
+        result = new StringBuilder(result.substring(0, result.length() - 1) + "}\n");
+        return result.toString();
     }
 
     public String printGuestStats(){
-        String result = "Guest number: "+this.ID+"\n   1. Is: ";
+        StringBuilder result = new StringBuilder("Guest number: " + this.ID + "\n   1. Is: ");
         for(Attribute key: ownAttribute.keySet()){
-            result += key.toString()+" "+ownAttribute.get(key)+",";
+            result.append(key.toString()).append(" ").append(ownAttribute.get(key)).append(",");
         }
-        result += "\n   2. Search for: ";
+        result.append("\n   2. Search for: ");
         for(Attribute key: searchAttribute.keySet()){
-            result += key.toString()+" "+searchAttribute.get(key)+",";
+            result.append(key.toString()).append(" ").append(searchAttribute.get(key)).append(",");
         }
-        return result;
+        return result.toString();
     }
 
     public Integer getID(){ return this.ID; }

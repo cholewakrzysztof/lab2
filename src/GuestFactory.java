@@ -29,6 +29,7 @@ public class GuestFactory implements Serializable {
         if(serialVersionUID!=Integer.parseInt(version)){
             throw new Exception("Serialization error");
         }
+        source = source.substring(source.indexOf(")")+1);
 
         String ownAttributeString = source.substring (0,source.indexOf('/'));
         String searchAttributeString = source.substring(source.indexOf('/')+1);

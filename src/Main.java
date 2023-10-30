@@ -32,6 +32,7 @@ public class Main {
 
                     switch (scanner.next()){
                         case "l" ->{
+                            guests.clear();
                             for (int i= 0; i< ioManager.getNumberOfGuests(); i++)
                                 guests.add(GuestFactory.createGuest(ioManager.getRandomOWNAttributes(), ioManager.getRandomSEARCHAttributes()));
 

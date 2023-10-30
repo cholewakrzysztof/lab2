@@ -1,8 +1,12 @@
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
-public class GuestFactory {
+public class GuestFactory implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1;
     public static Guest createGuest(int ownAttributeNumber, int searchAttributeNumber){
         Map<Attribute,Float> ownAttribute = new HashMap<>();
         Map<Attribute,Float> searchAttribute = new HashMap<>();
@@ -17,9 +21,14 @@ public class GuestFactory {
 
         return new Guest(ownAttribute,searchAttribute);
     }
-    public static Guest readGuest(String source){
+    public static Guest readGuest(String source) throws Exception {
         Map<Attribute,Float> ownAttribute = new HashMap<>();
         Map<Attribute,Float> searchAttribute = new HashMap<>();
+
+        String version = source.substring(source.indexOf("(")+1,source.indexOf(")"));
+        if(serialVersionUID!=Integer.parseInt(version)){
+            throw new Exception("Serialization error");
+        }
 
         String ownAttributeString = source.substring (0,source.indexOf('/'));
         String searchAttributeString = source.substring(source.indexOf('/')+1);

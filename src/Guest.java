@@ -1,6 +1,10 @@
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.*;
 
-public class Guest{
+public class Guest implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1;
     Map<Attribute,Float> ownAttribute;
     Map<Attribute,Float> searchAttribute;
     Integer assignmentNumber;
@@ -28,6 +32,7 @@ public class Guest{
     }
     public String toString(){
         StringBuilder result = new StringBuilder();
+        result.append("("+serialVersionUID+")");
         for (Attribute atr: ownAttribute.keySet()) {
             result.append(atr.toString()).append(":").append(ownAttribute.get(atr).toString()).append(",");
         }

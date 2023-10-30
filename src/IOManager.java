@@ -8,7 +8,7 @@ public class IOManager {
     private Integer maxSearchAttributes;
     private Integer numberOfGuests;
     private String fileSource;
-    private AppMode appMode;
+    private final AppMode appMode;
     private final Random random = new Random();
 
     public IOManager(String[] input) throws Exception {
@@ -22,7 +22,7 @@ public class IOManager {
             this.fileSource = args.get(args.indexOf("-f")+1);
             this.appMode = AppMode.FILE;
         } else if (args.contains("-c")) {
-            if(input.length%2>1){
+            if(input.length>2){
                 throw new WrongParametersException("If you open app in console mode don't add more parameters");
             }
             this.maxSearchAttributes = 4;

@@ -1,5 +1,4 @@
 import java.io.File;
-import java.io.FileReader;
 import java.util.*;
 
 public class Main {
@@ -23,7 +22,7 @@ public class Main {
             }
             case CONSOLE ->{
                 Scanner scanner = new Scanner(System.in);
-                Boolean go = true;
+                boolean go = true;
                 while (go){
                     System.out.println("=============================");
                     System.out.println("Chose option:");

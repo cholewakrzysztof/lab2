@@ -15,7 +15,7 @@ public class Matcher {
                 guest.sortAssignedGuests(delay);
                 if(delay){
                     Thread.sleep(1000);
-                    System.out.println("");
+                    System.out.println();
                     System.out.println(guest.printAssignedGuests(true));
                 }
             }

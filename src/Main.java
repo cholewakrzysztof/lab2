@@ -46,10 +46,7 @@ public class Main {
                         case "d" -> {
                             System.out.println("Type 1 for set delay ON");
                             System.out.println("Type 0 for set delay OFF");
-                            if(scanner.nextInt()>0)
-                                ioManager.setDelay(true);
-                            else
-                                ioManager.setDelay(false);
+                            ioManager.setDelay(scanner.nextInt() > 0);
                         }
                         case "s" -> {
                             System.out.println("Please chose number of max own guest attributes");

@@ -2,7 +2,7 @@
 Repository for second laboratory project
 # APPLICATION LAUNCH
 
-Main [-f file_path]/[-c]/[-o int] [-s int] [-g int]  
+Main [-f file_path]/[-c]/[-o int] [-s int] [-g int] [-d 1/0]  
 Options:  
   For file mode  
   &emsp;-f file mode with file source path  
@@ -12,6 +12,7 @@ Options:
   &emsp;-o max number of Guest own attributes  
   &emsp;-s max number of Guest search attributes  
   &emsp;-o number of guests  
+  &emsp;-d set delay 1-true 0-false   
 
 # Application has 3 mode of running  
 FILE MODE:  
@@ -26,3 +27,4 @@ CONSOLE MODE:
 PARAMETERS MODE:  
  &emsp; Read arguments or set default as {max Guest own attributes: 2, max Guest search attributes: 4, number of guests: 20}, as a result you get preformatted list of final matches with score of each guest in top 5 matches  
  &emsp; Sample run: Main -o 3 -s 5 -g 5  
+ &emsp; Sample run: Main -o 3 -s 5 -g 5 -d 1  

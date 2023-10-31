@@ -15,8 +15,7 @@ Options:
 
 # Application has 3 mode of running  
 FILE MODE:  
-  &emsp;Read list of guest from file and match them automatically, as a result you get preformatted list of final matches with score of each guest in top 5 matches
-  &emsp;You can use file from repository as source "plik.txt" with sample 5 guests  
+  &emsp;Read list of guest from file and match them automatically, as a result you get preformatted list of final matches with score of each guest in top 5 matches. You can use file from repository as source "plik.txt" with sample 5 guests  
   &emsp;Sample run: Main -f D:\JAVA\lab2\src\plik.txt  
 CONSOLE MODE:  
   &emsp;Run application console menu where you can pick;  

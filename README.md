@@ -2,8 +2,8 @@
 Repository for second laboratory project
 # APPLICATION LAUNCH
 
-Main [-f file_path]/[-c]/[-o int] [-s int] [-g int]
-Options:
+Main [-f file_path]/[-c]/[-o int] [-s int] [-g int] \n
+Options:\n
   For file mode
   -f file mode with file source path
   For console mode

@@ -2,7 +2,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class Matcher {
-    public static void matchGuests(List<Guest> guests){
+    public static void matchGuests(List<Guest> guests,boolean delay) throws InterruptedException {
         for (Guest guest : guests) {
             for (Guest possibleMatch : guests) {
                 if (Objects.equals(guest.getID(), possibleMatch.getID()))
@@ -12,7 +12,12 @@ public class Matcher {
                 possibleMatch.assignmentNumber++;
                 guest.assignedGuests.add(possibleMatch);
                 guest.assignedGuestsIDs.add(possibleMatch.getID());
-                guest.sortAssignedGuests();
+                guest.sortAssignedGuests(delay);
+                if(delay){
+                    Thread.sleep(1000);
+                    System.out.println("");
+                    System.out.println(guest.printAssignedGuests(true));
+                }
             }
         }
     }

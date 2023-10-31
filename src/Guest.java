@@ -60,22 +60,32 @@ public class Guest implements Serializable {
         return score;
     }
 
-    public void sortAssignedGuests(){
+    public void sortAssignedGuests(boolean delay) throws InterruptedException {
         for(int i=0; i< assignedGuests.size()-1; i++){
-            for(int j=0; j< assignedGuests.size()-1; j++){
+            for(int j=0; j< assignedGuests.size()-i-1; j++){
                 Float g1Score = this.countScore(assignedGuests.get(j));
                 Float g2Score = this.countScore(assignedGuests.get(j+1));
                 if(g1Score>g2Score){
-                    Guest tmp = new Guest(assignedGuests.get(j+1));
-                    assignedGuests.set(j+1,new Guest(assignedGuests.get(j)));
-                    assignedGuests.set(j,tmp);
-
-                    Integer tmp2 = assignedGuestsIDs.get(j+1);
-                    assignedGuestsIDs.set(j+1,assignedGuests.get(j).ID);
-                    assignedGuestsIDs.set(j,tmp2);
+                    if(delay){
+                        Thread.sleep(200);
+                        System.out.println(this.printAssignedGuests(true));
+                    }
+                    swapGuests(j);
                 }
             }
         }
+        updateAssigment();
+    }
+    private void swapGuests(int j){
+        Guest tmp = new Guest(assignedGuests.get(j+1));
+        assignedGuests.set(j+1,new Guest(assignedGuests.get(j)));
+        assignedGuests.set(j,tmp);
+
+        Integer tmp2 = assignedGuestsIDs.get(j+1);
+        assignedGuestsIDs.set(j+1,assignedGuests.get(j).ID);
+        assignedGuestsIDs.set(j,tmp2);
+    }
+    private void updateAssigment(){
         if(assignedGuests.size()>5){
             assignedGuests.get(5).assignmentNumber--;
             assignedGuests = assignedGuests.subList(1,6);
@@ -84,14 +94,14 @@ public class Guest implements Serializable {
     }
 
     public String printAssignedGuests(Boolean withScore){
-        StringBuilder result = new StringBuilder("\nFor guest number: " + this.ID + " = {");
+        StringBuilder result = new StringBuilder("For guest number: " + this.ID + " = {");
         for (Guest g:assignedGuests) {
             result.append(g.ID);
             if(withScore)
                 result.append(" ").append(this.countScore(g));
             result.append(",");
         }
-        result = new StringBuilder(result.substring(0, result.length() - 1) + "}\n");
+        result = new StringBuilder(result.substring(0, result.length() - 1) + "}");
         return result.toString();
     }
 
@@ -104,8 +114,9 @@ public class Guest implements Serializable {
         for(Attribute key: searchAttribute.keySet()){
             result.append(key.toString()).append(" ").append(searchAttribute.get(key)).append(",");
         }
-        return result.toString();
+        return result+"\n";
     }
 
     public Integer getID(){ return this.ID; }
+    public static void resetID(){static_ID = 0;}
 }

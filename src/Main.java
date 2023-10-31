@@ -15,7 +15,7 @@ public class Main {
                     guests.add(GuestFactory.readGuest(scanner.next()));
                 }
 
-                Matcher.matchGuests(guests);
+                Matcher.matchGuests(guests,ioManager.getDelay());
 
                 for (String text:IOManager.getGuestStringArray(guests))
                     System.out.print(text);
@@ -28,18 +28,28 @@ public class Main {
                     System.out.println("Chose option:");
                     System.out.println("Set data for app............s");
                     System.out.println("Launch app..................l");
+                    System.out.println("On/Off delay................d");
                     System.out.println("Quit........................q");
 
                     switch (scanner.next()){
                         case "l" ->{
                             guests.clear();
+                            Guest.resetID();
                             for (int i= 0; i< ioManager.getNumberOfGuests(); i++)
                                 guests.add(GuestFactory.createGuest(ioManager.getRandomOWNAttributes(), ioManager.getRandomSEARCHAttributes()));
 
-                            Matcher.matchGuests(guests);
+                            Matcher.matchGuests(guests,ioManager.getDelay());
 
                             for (String text:IOManager.getGuestStringArray(guests))
-                                System.out.print(text);
+                                System.out.print(text+"\n");
+                        }
+                        case "d" -> {
+                            System.out.println("Type 1 for set delay ON");
+                            System.out.println("Type 0 for set delay OFF");
+                            if(scanner.nextInt()>0)
+                                ioManager.setDelay(true);
+                            else
+                                ioManager.setDelay(false);
                         }
                         case "s" -> {
                             System.out.println("Please chose number of max own guest attributes");
@@ -68,10 +78,10 @@ public class Main {
                 for (int i= 0; i< ioManager.getNumberOfGuests(); i++)
                     guests.add(GuestFactory.createGuest(ioManager.getRandomOWNAttributes(), ioManager.getRandomSEARCHAttributes()));
 
-                Matcher.matchGuests(guests);
+                Matcher.matchGuests(guests, ioManager.getDelay());
 
                 for (String text:IOManager.getGuestStringArray(guests))
-                    System.out.print(text);
+                    System.out.print(text+"\n");
             }
             default -> throw new Exception("Unknown error");
         }

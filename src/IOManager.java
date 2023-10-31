@@ -9,15 +9,18 @@ public class IOManager {
     private Integer numberOfGuests;
     private String fileSource;
     private final AppMode appMode;
+    private boolean delay;
     private final Random random = new Random();
 
     public IOManager(String[] input) throws Exception {
 
         List<String> args = new LinkedList<>(Arrays.stream(input).toList());
 
+        this.setDelay(false);
+
         if(args.contains("-f")){
-            if(input.length>2){
-                throw new WrongParametersException("If you open app in file mode add just source of file");
+            if(input.length%2!=0){
+                throw new WrongParametersException("Number of parameters is incorrect");
             }
             this.fileSource = args.get(args.indexOf("-f")+1);
             this.appMode = AppMode.FILE;
@@ -53,7 +56,13 @@ public class IOManager {
 
             this.appMode = AppMode.PARAMETERS;
         }
-
+        if(args.contains("-d")) {
+            int delay = Integer.parseInt(args.get(args.indexOf("-d") + 1));
+            if(delay==0)
+                this.setDelay(false);
+            else if(delay==1)
+                this.setDelay(true);
+        }
     }
     public static String[] getGuestStringArray(List<Guest> guests){
         String[] result = new String[guests.size()];
@@ -87,4 +96,7 @@ public class IOManager {
     public String getFileSource() { return fileSource; }
 
     public AppMode getAppMode(){return appMode; }
+
+    public void setDelay(boolean set){ delay = set;}
+    public boolean getDelay(){return delay;}
 }

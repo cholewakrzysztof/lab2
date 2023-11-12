@@ -1,69 +1,17 @@
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Random;
+import org.apache.commons.cli.CommandLine;
+
+import java.util.*;
 
 public class IOManager {
-    private Integer maxOwnAttributes;
-    private Integer maxSearchAttributes;
-    private Integer numberOfGuests;
-    private String fileSource;
-    private final AppMode appMode;
-    private boolean delay;
     private final Random random = new Random();
+    public Settings settings;
 
     public IOManager(String[] input) throws Exception {
+        MyInputParser myInputParser = new MyInputParser(input);
 
-        List<String> args = new LinkedList<>(Arrays.stream(input).toList());
-
-        this.setDelay(false);
-
-        if(args.contains("-f")){
-            if(input.length%2!=0){
-                throw new WrongParametersException("Number of parameters is incorrect");
-            }
-            this.fileSource = args.get(args.indexOf("-f")+1);
-            this.appMode = AppMode.FILE;
-        } else if (args.contains("-c")) {
-            if(input.length>2){
-                throw new WrongParametersException("If you open app in console mode don't add more parameters");
-            }
-            this.maxSearchAttributes = 4;
-            this.maxOwnAttributes = 2;
-            this.numberOfGuests = 20;
-            this.appMode = AppMode.CONSOLE;
-        }else{
-            if(input.length%2!=0){
-                throw new WrongParametersException("Number of parameters is incorrect");
-            }
-            if(args.contains("-o")){
-                this.maxOwnAttributes = Integer.parseInt(args.get(args.indexOf("-o")+1));
-                if(this.maxOwnAttributes<=0)
-                    throw new WrongParametersException("Number of max own attributes must be higher than 0");
-            }else this.maxOwnAttributes = 2;
-
-            if(args.contains("-s")){
-                this.maxSearchAttributes = Integer.parseInt(args.get(args.indexOf("-s")+1));
-                if(this.maxSearchAttributes<=0)
-                    throw new WrongParametersException("Number of max search attributes must be higher than 0");
-            }else this.maxSearchAttributes = 4;
-
-            if(args.contains("-g")) {
-                this.numberOfGuests = Integer.parseInt(args.get(args.indexOf("-g") + 1));
-                if (this.numberOfGuests <= 0)
-                    throw new WrongParametersException("Number of guest must be higher than 0");
-            }else this.numberOfGuests = 20;
-
-            this.appMode = AppMode.PARAMETERS;
-        }
-        if(args.contains("-d")) {
-            int delay = Integer.parseInt(args.get(args.indexOf("-d") + 1));
-            if(delay==0)
-                this.setDelay(false);
-            else if(delay==1)
-                this.setDelay(true);
-        }
+        this.settings = new Settings(myInputParser);
     }
+
     public static String[] getGuestStringArray(List<Guest> guests){
         String[] result = new String[guests.size()];
         for (int i=0; i<guests.size();i++){
@@ -71,32 +19,11 @@ public class IOManager {
         }
         return result;
     }
-    public Integer getNumberOfGuests(){
-        return numberOfGuests;
-    }
     public Integer getRandomOWNAttributes(){
-        return random.nextInt(1,maxOwnAttributes);
+        return random.nextInt(1,settings.getMaxOwnAttributes());
     }
     public Integer getRandomSEARCHAttributes(){
-        return random.nextInt(1,maxSearchAttributes);
+        return random.nextInt(1,settings.getMaxSearchAttributes());
     }
-
-    public void setMaxOwnAttributes(Integer value){
-        maxOwnAttributes = value;
-    }
-    public void setMaxSearchAttributes(Integer value){
-        maxSearchAttributes = value;
-    }
-
-    public void setNumberOfGuests(Integer value){
-        numberOfGuests = value;
-    }
-    public Integer getMaxOwnAttributes(){return maxOwnAttributes;}
-    public Integer getMaxSearchAttributes(){return maxSearchAttributes;}
-    public String getFileSource() { return fileSource; }
-
-    public AppMode getAppMode(){return appMode; }
-
-    public void setDelay(boolean set){ delay = set;}
-    public boolean getDelay(){return delay;}
+    public Settings getSettings(){ return settings;}
 }

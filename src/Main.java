@@ -7,15 +7,15 @@ public class Main {
         IOManager ioManager = new IOManager(args);
         List<Guest> guests = new LinkedList<>();
 
-        switch (ioManager.getAppMode()){
+        switch (ioManager.getSettings().getAppMode()){
             case FILE -> {
-                File file = new File(ioManager.getFileSource());
+                File file = new File(ioManager.getSettings().getFileSource());
                 Scanner scanner = new Scanner(file);
                 while (scanner.hasNext()){
                     guests.add(GuestFactory.readGuest(scanner.next()));
                 }
 
-                Matcher.matchGuests(guests,ioManager.getDelay());
+                Matcher.matchGuests(guests,ioManager.getSettings().getDelay());
 
                 for (String text:IOManager.getGuestStringArray(guests))
                     System.out.print(text);
@@ -35,10 +35,10 @@ public class Main {
                         case "l" ->{
                             guests.clear();
                             Guest.resetID();
-                            for (int i= 0; i< ioManager.getNumberOfGuests(); i++)
+                            for (int i= 0; i< ioManager.getSettings().getNumberOfGuests(); i++)
                                 guests.add(GuestFactory.createGuest(ioManager.getRandomOWNAttributes(), ioManager.getRandomSEARCHAttributes()));
 
-                            Matcher.matchGuests(guests,ioManager.getDelay());
+                            Matcher.matchGuests(guests,ioManager.getSettings().getDelay());
 
                             for (String text:IOManager.getGuestStringArray(guests))
                                 System.out.print(text+"\n");
@@ -46,22 +46,22 @@ public class Main {
                         case "d" -> {
                             System.out.println("Type 1 for set delay ON");
                             System.out.println("Type 0 for set delay OFF");
-                            ioManager.setDelay(scanner.nextInt() > 0);
+                            ioManager.getSettings().setDelay(scanner.nextInt() > 0);
                         }
                         case "s" -> {
                             System.out.println("Please chose number of max own guest attributes");
-                            ioManager.setMaxOwnAttributes(scanner.nextInt());
+                            ioManager.getSettings().setMaxOwnAttributes(scanner.nextInt());
 
                             System.out.println("Please chose number of max search guest attributes");
-                            ioManager.setMaxSearchAttributes(scanner.nextInt());
+                            ioManager.getSettings().setMaxSearchAttributes(scanner.nextInt());
 
                             System.out.println("Please chose number of guests");
-                            ioManager.setNumberOfGuests(scanner.nextInt());
+                            ioManager.getSettings().setNumberOfGuests(scanner.nextInt());
 
                             System.out.println("App options: ");
-                            System.out.println("Max guest own attributes   : "+ioManager.getMaxOwnAttributes());
-                            System.out.println("Max guest search attributes: "+ioManager.getMaxSearchAttributes());
-                            System.out.println("Number of guests           : "+ioManager.getNumberOfGuests());
+                            System.out.println("Max guest own attributes   : "+ioManager.getSettings().getMaxOwnAttributes());
+                            System.out.println("Max guest search attributes: "+ioManager.getSettings().getMaxSearchAttributes());
+                            System.out.println("Number of guests           : "+ioManager.getSettings().getNumberOfGuests());
 
                         }
                         case "q" -> {System.out.println("Good bye!"); go = false;}
@@ -72,10 +72,10 @@ public class Main {
 
             }
             case PARAMETERS -> {
-                for (int i= 0; i< ioManager.getNumberOfGuests(); i++)
+                for (int i= 0; i< ioManager.getSettings().getNumberOfGuests(); i++)
                     guests.add(GuestFactory.createGuest(ioManager.getRandomOWNAttributes(), ioManager.getRandomSEARCHAttributes()));
 
-                Matcher.matchGuests(guests, ioManager.getDelay());
+                Matcher.matchGuests(guests, ioManager.getSettings().getDelay());
 
                 for (String text:IOManager.getGuestStringArray(guests))
                     System.out.print(text+"\n");

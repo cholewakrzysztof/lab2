@@ -8,8 +8,8 @@ public class GuestFactory implements Serializable {
     @Serial
     private static final long serialVersionUID = 1;
     public static Guest createGuest(int ownAttributeNumber, int searchAttributeNumber){
-        Map<Attribute,Float> ownAttribute = new HashMap<>();
-        Map<Attribute,Float> searchAttribute = new HashMap<>();
+        Map<String,Float> ownAttribute = new HashMap<>();
+        Map<String,Float> searchAttribute = new HashMap<>();
 
         Random random = new Random();
         for (int i =0; i<ownAttributeNumber; i++){
@@ -22,8 +22,8 @@ public class GuestFactory implements Serializable {
         return new Guest(ownAttribute,searchAttribute);
     }
     public static Guest readGuest(String source) throws Exception {
-        Map<Attribute,Float> ownAttribute = new HashMap<>();
-        Map<Attribute,Float> searchAttribute = new HashMap<>();
+        Map<String,Float> ownAttribute = new HashMap<>();
+        Map<String,Float> searchAttribute = new HashMap<>();
 
         String version = source.substring(source.indexOf("(")+1,source.indexOf(")"));
         if(serialVersionUID!=Integer.parseInt(version)){

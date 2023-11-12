@@ -5,15 +5,15 @@ import java.util.*;
 public class Guest implements Serializable {
     @Serial
     private static final long serialVersionUID = 1;
-    Map<Attribute,Float> ownAttribute;
-    Map<Attribute,Float> searchAttribute;
+    Map<String,Float> ownAttribute;
+    Map<String,Float> searchAttribute;
     Integer assignmentNumber;
     List<Guest> assignedGuests;
     List<Integer> assignedGuestsIDs;
     private static final float B = 0.0f;
     private static Integer static_ID = 0;
     private final Integer ID;
-    public Guest(Map<Attribute,Float> ownAttribute, Map<Attribute,Float> searchAttribute){
+    public Guest(Map<String,Float> ownAttribute, Map<String,Float> searchAttribute){
         this.ownAttribute = ownAttribute;
         this.searchAttribute = searchAttribute;
         assignedGuests = new LinkedList<>();
@@ -33,11 +33,11 @@ public class Guest implements Serializable {
     public String toString(){
         StringBuilder result = new StringBuilder();
         result.append("("+serialVersionUID+")");
-        for (Attribute atr: ownAttribute.keySet()) {
+        for (String atr: ownAttribute.keySet()) {
             result.append(atr.toString()).append(":").append(ownAttribute.get(atr).toString()).append(",");
         }
         result.append("/");
-        for (Attribute atr: searchAttribute.keySet()) {
+        for (String atr: searchAttribute.keySet()) {
             result.append(atr.toString()).append(":").append(searchAttribute.get(atr).toString()).append(",");
         }
         return result.toString();
@@ -45,12 +45,12 @@ public class Guest implements Serializable {
 
     public Float countScore(Guest otherGuest){
         float score = 0f;
-        for (Attribute atr: this.ownAttribute.keySet()) {
+        for (String atr: this.ownAttribute.keySet()) {
             if (otherGuest.searchAttribute.containsKey(atr)){
                 score+= ownAttribute.get(atr)*otherGuest.searchAttribute.get(atr);
             }
         }
-        for (Attribute atr: this.searchAttribute.keySet()){
+        for (String atr: this.searchAttribute.keySet()){
             if(otherGuest.ownAttribute.containsKey(atr)){
                 score+= searchAttribute.get(atr)*otherGuest.ownAttribute.get(atr);
             }
@@ -107,11 +107,11 @@ public class Guest implements Serializable {
 
     public String printGuestStats(){
         StringBuilder result = new StringBuilder("Guest number: " + this.ID + "\n   1. Is: ");
-        for(Attribute key: ownAttribute.keySet()){
+        for(String key: ownAttribute.keySet()){
             result.append(key.toString()).append(" ").append(ownAttribute.get(key)).append(",");
         }
         result.append("\n   2. Search for: ");
-        for(Attribute key: searchAttribute.keySet()){
+        for(String key: searchAttribute.keySet()){
             result.append(key.toString()).append(" ").append(searchAttribute.get(key)).append(",");
         }
         return result+"\n";

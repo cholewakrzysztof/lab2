@@ -2,23 +2,25 @@ import java.util.List;
 import java.util.Objects;
 
 public class Matcher {
-    public static void matchGuests(List<Guest> guests,boolean delay) throws InterruptedException {
-        for (Guest guest : guests) {
-            for (Guest possibleMatch : guests) {
-                if (Objects.equals(guest.getID(), possibleMatch.getID()))
-                    continue;
-                if (guest.assignedGuestsIDs.contains(possibleMatch.getID()))
-                    continue;
-                possibleMatch.assignmentNumber++;
-                guest.assignedGuests.add(possibleMatch);
-                guest.assignedGuestsIDs.add(possibleMatch.getID());
-                guest.sortAssignedGuests(delay);
-                if(delay){
-                    Thread.sleep(1000);
-                    System.out.println();
-                    System.out.println(guest.printAssignedGuests(true));
-                }
+    public static void matchGuests(List<Guest> guests,Settings settings) throws InterruptedException {
+        boolean delay = settings.getDelay();
+        boolean withScore = settings.PrintScore();
+        for(Guest guest : guests){
+            guests.stream()
+                    .filter(g->g.hashCode()!=guest.hashCode())
+                    .forEach(possibleMatch->{
+                        guest.countScore(possibleMatch);
+                        guest.getQueue().add(possibleMatch);
+                        if(guest.getQueue().size()>5)
+                            guest.getQueue().poll();
+                    });
+            if(delay){
+                Thread.sleep(1000);
+                System.out.println();
+                System.out.println(guest.printAssignedGuests(withScore));
             }
+            while (!guest.getQueue().isEmpty())
+                guest.assignedGuests.add((Guest)guest.getQueue().poll());
         }
     }
 }

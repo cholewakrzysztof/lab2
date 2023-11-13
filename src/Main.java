@@ -15,38 +15,50 @@ public class Main {
                     guests.add(GuestFactory.readGuest(scanner.next()));
                 }
 
-                Matcher.matchGuests(guests,ioManager.getSettings().getDelay());
+                Matcher.matchGuests(guests,ioManager.getSettings());
 
-                for (String text:IOManager.getGuestStringArray(guests))
+                for (String text:IOManager.getGuestStringArray(guests,ioManager.getSettings()))
                     System.out.print(text);
             }
             case CONSOLE ->{
                 Scanner scanner = new Scanner(System.in);
                 boolean go = true;
+                for (int i= 0; i< ioManager.getSettings().getNumberOfGuests(); i++)
+                    guests.add(GuestFactory.createGuest(ioManager.getRandomOWNAttributes(), ioManager.getRandomSEARCHAttributes()));
+
                 while (go){
                     System.out.println("=============================");
                     System.out.println("Chose option:");
-                    System.out.println("Set data for app............s");
-                    System.out.println("Launch app..................l");
-                    System.out.println("On/Off delay................d");
-                    System.out.println("Quit........................q");
+                    System.out.println("Set data for app.............s");
+                    System.out.println("Launch app...................l");
+                    System.out.println("Make new guests..............n");
+                    System.out.println("On/Off delay.................d");
+                    System.out.println("On/Off score showing........sc");
+                    System.out.println("Quit.........................q");
 
                     switch (scanner.next()){
-                        case "l" ->{
+                        case "n" ->{
                             guests.clear();
                             Guest.resetID();
                             for (int i= 0; i< ioManager.getSettings().getNumberOfGuests(); i++)
                                 guests.add(GuestFactory.createGuest(ioManager.getRandomOWNAttributes(), ioManager.getRandomSEARCHAttributes()));
 
-                            Matcher.matchGuests(guests,ioManager.getSettings().getDelay());
+                        }
+                        case "l" ->{
+                            Matcher.matchGuests(guests,ioManager.getSettings());
 
-                            for (String text:IOManager.getGuestStringArray(guests))
+                            for (String text:IOManager.getGuestStringArray(guests,ioManager.getSettings()))
                                 System.out.print(text+"\n");
                         }
                         case "d" -> {
                             System.out.println("Type 1 for set delay ON");
                             System.out.println("Type 0 for set delay OFF");
                             ioManager.getSettings().setDelay(scanner.nextInt() > 0);
+                        }
+                        case "sc" -> {
+                            System.out.println("Type 1 for showing score");
+                            System.out.println("Type 0 for not showing score");
+                            ioManager.getSettings().setPrintScore(scanner.nextInt() > 0);
                         }
                         case "s" -> {
                             System.out.println("Please chose number of max own guest attributes");
@@ -75,9 +87,9 @@ public class Main {
                 for (int i= 0; i< ioManager.getSettings().getNumberOfGuests(); i++)
                     guests.add(GuestFactory.createGuest(ioManager.getRandomOWNAttributes(), ioManager.getRandomSEARCHAttributes()));
 
-                Matcher.matchGuests(guests, ioManager.getSettings().getDelay());
+                Matcher.matchGuests(guests, ioManager.getSettings());
 
-                for (String text:IOManager.getGuestStringArray(guests))
+                for (String text:IOManager.getGuestStringArray(guests,ioManager.getSettings()))
                     System.out.print(text+"\n");
             }
             default -> throw new Exception("Unknown error");

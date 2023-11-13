@@ -1,15 +1,18 @@
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 public class GuestFactory implements Serializable {
     @Serial
     private static final long serialVersionUID = 1;
+    private static List<String> staticAttributes = Arrays.asList("INTERN","DEVELOPER","MANAGER");
     public static Guest createGuest(int ownAttributeNumber, int searchAttributeNumber){
         Map<String,Float> ownAttribute = new HashMap<>();
         Map<String,Float> searchAttribute = new HashMap<>();
+
+        for (String src:staticAttributes){
+            Attribute.fromString(src);
+        }
 
         Random random = new Random();
         for (int i =0; i<ownAttributeNumber; i++){

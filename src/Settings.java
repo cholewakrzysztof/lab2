@@ -5,6 +5,7 @@ public class Settings {
     private String fileSource;
     private AppMode appMode;
     private boolean delay;
+    private boolean printScore;
 
     public Settings(MyInputParser myInputParser) throws WrongParametersException {
         if(myInputParser.cmd.hasOption("-f")){
@@ -37,6 +38,7 @@ public class Settings {
             this.appMode = AppMode.PARAMETERS;
         }
         delay = myInputParser.cmd.hasOption("-d");
+        printScore = myInputParser.cmd.hasOption("-sc");
     }
 
     public Integer getNumberOfGuests(){
@@ -57,4 +59,7 @@ public class Settings {
     public void setNumberOfGuests(Integer value){
         numberOfGuests = value;
     }
+
+    public boolean PrintScore(){return printScore;}
+    public void setPrintScore(boolean printScore){this.printScore = printScore;}
 }

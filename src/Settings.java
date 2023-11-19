@@ -3,7 +3,7 @@ public class Settings {
     private Integer maxSearchAttributes;
     private Integer numberOfGuests;
     private String fileSource;
-    private AppMode appMode;
+    private final AppMode appMode;
     private boolean delay;
     private boolean printScore;
 

@@ -5,7 +5,7 @@ import java.util.*;
 public class GuestFactory implements Serializable {
     @Serial
     private static final long serialVersionUID = 1;
-    private static List<String> staticAttributes = Arrays.asList("INTERN","DEVELOPER","MANAGER");
+    private static final List<String> staticAttributes = Arrays.asList("INTERN","DEVELOPER","MANAGER");
     public static Guest createGuest(int ownAttributeNumber, int searchAttributeNumber){
         Map<String,Float> ownAttribute = new HashMap<>();
         Map<String,Float> searchAttribute = new HashMap<>();

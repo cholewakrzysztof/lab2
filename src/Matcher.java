@@ -1,5 +1,4 @@
 import java.util.List;
-import java.util.Objects;
 
 public class Matcher {
     public static void matchGuests(List<Guest> guests,Settings settings) throws InterruptedException {
